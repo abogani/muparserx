@@ -69,7 +69,10 @@
 /** \brief Floating point type used by the parser. */
 #define MUP_FLOAT_TYPE double
 
-#define MUP_INT_TYPE int
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wpedantic"
+#define MUP_INT_TYPE __int128
+#pragma GCC diagnostic pop
 
 /** \brief Verifies whether a given condition is met.
 	

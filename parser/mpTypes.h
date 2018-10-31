@@ -94,7 +94,10 @@ typedef std::vector<ptr_val_type> val_vec_type;
 typedef MUP_FLOAT_TYPE float_type;
 
 /** \brief Parser datatype for integer valuse. */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wpedantic"
 typedef MUP_INT_TYPE int_type;
+#pragma GCC diagnostic pop
 
 /** \brief The basic type used for representing complex numbers. */
 typedef std::complex<float_type> cmplx_type;

@@ -132,6 +132,7 @@ MUP_NAMESPACE_START
     virtual void Release() override;
   }; // class Value
 
+std::ostream& operator<<( std::ostream& dest, __int128_t value );
 
 MUP_NAMESPACE_END
 
