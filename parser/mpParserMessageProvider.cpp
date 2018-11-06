@@ -12,7 +12,6 @@ MUP_NAMESPACE_START
   //-------------------------------------------------------------------------------------------------
 
   ParserMessageProviderBase::ParserMessageProviderBase()
-    :m_vErrMsg(0)
   {}
 
   //-----------------------------------------------------------------------------------------------
@@ -22,7 +21,6 @@ MUP_NAMESPACE_START
   //-----------------------------------------------------------------------------------------------
   void ParserMessageProviderBase::Init()
   {
-    InitErrorMessages();
     for (int i=0; i<ecCOUNT; ++i)
     {
       if (!m_vErrMsg[i].length())
@@ -45,65 +43,61 @@ MUP_NAMESPACE_START
 
   ParserMessageProviderEnglish::ParserMessageProviderEnglish()
     :ParserMessageProviderBase()
-  {}
-
-  //-----------------------------------------------------------------------------------------------
-  void ParserMessageProviderEnglish::InitErrorMessages()
   {
-    m_vErrMsg.resize(ecCOUNT);
-
-    m_vErrMsg[ecUNASSIGNABLE_TOKEN]       = _T("Undefined token \"$IDENT$\" found at position $POS$.");
-    m_vErrMsg[ecINTERNAL_ERROR]           = _T("Internal error.");
-    m_vErrMsg[ecUNKNOWN_ESCAPE_SEQUENCE]  = _T("Unknown escape sequence.");
-    m_vErrMsg[ecINVALID_NAME]             = _T("Invalid function, variable or constant name.");
-    m_vErrMsg[ecINVALID_FUN_PTR]          = _T("Invalid pointer to callback function.");
-    m_vErrMsg[ecINVALID_VAR_PTR]          = _T("Invalid pointer to variable.");
-    m_vErrMsg[ecUNEXPECTED_OPERATOR]      = _T("Unexpected operator \"$IDENT$\" found at position $POS$.");
-    m_vErrMsg[ecUNEXPECTED_EOF]           = _T("Unexpected end of expression found at position $POS$.");
-    m_vErrMsg[ecUNEXPECTED_COMMA]         = _T("Unexpected comma found at position $POS$.");
-    m_vErrMsg[ecUNEXPECTED_PARENS]        = _T("Unexpected parenthesis \"$IDENT$\" found at position $POS$.");
-    m_vErrMsg[ecUNEXPECTED_FUN]           = _T("Unexpected function \"$IDENT$\" found at position $POS$.");
-    m_vErrMsg[ecUNEXPECTED_VAL]           = _T("Unexpected value \"$IDENT$\" found at position $POS$.");
-    m_vErrMsg[ecUNEXPECTED_VAR]           = _T("Unexpected variable \"$IDENT$\" found at position $POS$.");
-    m_vErrMsg[ecUNEXPECTED_STR]           = _T("Unexpected string token found at position $POS$.");
-    m_vErrMsg[ecUNEXPECTED_CONDITIONAL]   = _T("The \"$IDENT$\" operator must be preceded by a closing bracket.");
-    m_vErrMsg[ecUNEXPECTED_NEWLINE]       = _T("Unexprected newline.");
-    m_vErrMsg[ecMISSING_PARENS]           = _T("Missing parenthesis.");
-    m_vErrMsg[ecMISSING_ELSE_CLAUSE]      = _T("If-then-else operator is missing an else clause.");
-    m_vErrMsg[ecMISPLACED_COLON]          = _T("Misplaced colon at position $POS$.");
-    m_vErrMsg[ecTOO_MANY_PARAMS]          = _T("Too many parameters passed to function \"$IDENT$\".");
-    m_vErrMsg[ecTOO_FEW_PARAMS]           = _T("Too few parameters passed to function \"$IDENT$\".");
-    m_vErrMsg[ecDIV_BY_ZERO]              = _T("Division by zero occurred.");
-    m_vErrMsg[ecDOMAIN_ERROR]             = _T("The value passed as argument to function/operator \"$IDENT$\" is not part of its domain.");
-    m_vErrMsg[ecNAME_CONFLICT]            = _T("Name conflict.");
-    m_vErrMsg[ecOPT_PRI]                  = _T("Invalid value for operator priority (must be greater or equal to zero).");
-    m_vErrMsg[ecBUILTIN_OVERLOAD]         = _T("Binary operator identifier conflicts with a built in operator.");
-    m_vErrMsg[ecUNTERMINATED_STRING]      = _T("Unterminated string starting at position $POS$.");
-    m_vErrMsg[ecSTRING_EXPECTED]          = _T("String function called with a non string type of argument.");
-    m_vErrMsg[ecVAL_EXPECTED]             = _T("Numerical function called with a non value type of argument.");
-    m_vErrMsg[ecTYPE_CONFLICT]            = _T("Value \"$IDENT$\" is of type '$TYPE1$'. There is no implicit conversion to type '$TYPE2$'.");
-    m_vErrMsg[ecTYPE_CONFLICT_FUN]        = _T("Argument $ARG$ of function/operator \"$IDENT$\" is of type '$TYPE1$' whereas type '$TYPE2$' was expected.");
-    m_vErrMsg[ecTYPE_CONFLICT_IDX]        = _T("Index to \"$IDENT$\" must be a positive integer value. '$TYPE1$' is not an acceptable type.");
-    m_vErrMsg[ecGENERIC]                  = _T("Parser error.");
-    m_vErrMsg[ecINVALID_TYPE]             = _T("Invalid argument type.");
-    m_vErrMsg[ecINVALID_TYPECAST]         = _T("Value type conversion from type '$TYPE1$' to '$TYPE2$' is not supported!");
-    m_vErrMsg[ecARRAY_SIZE_MISMATCH]      = _T("Array size mismatch.");
-    m_vErrMsg[ecNOT_AN_ARRAY]             = _T("Using the index operator on the scalar variable \"$IDENT$\" is not allowed.");
-    m_vErrMsg[ecUNEXPECTED_SQR_BRACKET]   = _T("Unexpected \"[]\".");
-	m_vErrMsg[ecUNEXPECTED_CURLY_BRACKET] = _T("Unexpected \"{}\".");
-    m_vErrMsg[ecINDEX_OUT_OF_BOUNDS]      = _T("Index to variable \"$IDENT$\" is out of bounds.");
-    m_vErrMsg[ecINDEX_DIMENSION]          = _T("Index operator dimension error.");
-    m_vErrMsg[ecMISSING_SQR_BRACKET]      = _T("Missing \"]\".");
-	m_vErrMsg[ecMISSING_CURLY_BRACKET]    = _T("Missing \"}\".");
-    m_vErrMsg[ecASSIGNEMENT_TO_VALUE]     = _T("Assignment operator \"$IDENT$\" can't be used in this context.");
-    m_vErrMsg[ecEVAL]                     = _T("Can't evaluate function/operator \"$IDENT$\": $HINT$");
-    m_vErrMsg[ecINVALID_PARAMETER]        = _T("Parameter $ARG$ of function \"$IDENT$\" is invalid.");
-    m_vErrMsg[ecINVALID_NUMBER_OF_PARAMETERS] = _T("Invalid number of function arguments.");
-    m_vErrMsg[ecOVERFLOW]                     = _T("Possible arithmetic overflow occurred in function/operator \"$IDENT$\".");
-    m_vErrMsg[ecMATRIX_DIMENSION_MISMATCH]    = _T("Matrix dimension error.");
-    m_vErrMsg[ecVARIABLE_DEFINED]             = _T("Variable \"$IDENT$\" is already defined.");
-    m_vErrMsg[ecCONSTANT_DEFINED]             = _T("Constant \"$IDENT$\" is already defined.");
-    m_vErrMsg[ecFUNOPRT_DEFINED]              = _T("Function/operator \"$IDENT$\" is already defined.");
+    m_vErrMsg = {
+      "Undefined token \"$IDENT$\" found at position $POS$.",
+      "Internal error.",
+      "Unknown escape sequence.",
+      "Invalid function, variable or constant name.",
+      "Invalid pointer to callback function.",
+      "Invalid pointer to variable.",
+      "Unexpected operator \"$IDENT$\" found at position $POS$.",
+      "Unexpected end of expression found at position $POS$.",
+      "Unexpected comma found at position $POS$.",
+      "Unexpected parenthesis \"$IDENT$\" found at position $POS$.",
+      "Unexpected function \"$IDENT$\" found at position $POS$.",
+      "Unexpected value \"$IDENT$\" found at position $POS$.",
+      "Unexpected variable \"$IDENT$\" found at position $POS$.",
+      "Unexpected string token found at position $POS$.",
+      "The \"$IDENT$\" operator must be preceded by a closing bracket.",
+      "Unexprected newline.",
+      "Missing parenthesis.",
+      "If-then-else operator is missing an else clause.",
+      "Misplaced colon at position $POS$.",
+      "Too many parameters passed to function \"$IDENT$\".",
+      "Too few parameters passed to function \"$IDENT$\".",
+      "Division by zero occurred.",
+      "The value passed as argument to function/operator \"$IDENT$\" is not part of its domain.",
+      "Name conflict.",
+      "Invalid value for operator priority (must be greater or equal to zero).",
+      "Binary operator identifier conflicts with a built in operator.",
+      "Unterminated string starting at position $POS$.",
+      "String function called with a non string type of argument.",
+      "Numerical function called with a non value type of argument.",
+      "Value \"$IDENT$\" is of type '$TYPE1$'. There is no implicit conversion to type '$TYPE2$'.",
+      "Argument $ARG$ of function/operator \"$IDENT$\" is of type '$TYPE1$' whereas type '$TYPE2$' was expected.",
+      "Index to \"$IDENT$\" must be a positive integer value. '$TYPE1$' is not an acceptable type.",
+      "Parser error.",
+      "Invalid argument type.",
+      "Value type conversion from type '$TYPE1$' to '$TYPE2$' is not supported!",
+      "Array size mismatch.",
+      "Using the index operator on the scalar variable \"$IDENT$\" is not allowed.",
+      "Unexpected \"[]\".",
+      "Unexpected \"{}\".",
+      "Index to variable \"$IDENT$\" is out of bounds.",
+      "Index operator dimension error.",
+      "Missing \"]\".",
+      "Missing \"}\".",
+      "Assignment operator \"$IDENT$\" can't be used in this context.",
+      "Can't evaluate function/operator \"$IDENT$\": $HINT$",
+      "Parameter $ARG$ of function \"$IDENT$\" is invalid.",
+      "Invalid number of function arguments.",
+      "Possible arithmetic overflow occurred in function/operator \"$IDENT$\".",
+      "Matrix dimension error.",
+      "Variable \"$IDENT$\" is already defined.",
+      "Constant \"$IDENT$\" is already defined.",
+      "Function/operator \"$IDENT$\" is already defined."
+    };
   }
 
 #if defined(_UNICODE)
@@ -116,66 +110,63 @@ MUP_NAMESPACE_START
 
   ParserMessageProviderGerman::ParserMessageProviderGerman()
     :ParserMessageProviderBase()
-  {}
-
-  //-----------------------------------------------------------------------------------------------
-  void ParserMessageProviderGerman::InitErrorMessages()
   {
-    m_vErrMsg.resize(ecCOUNT);
-
-    m_vErrMsg[ecUNASSIGNABLE_TOKEN]       = _T("Unbekanntes Token \"$IDENT$\" an Position $POS$ gefunden.");
-    m_vErrMsg[ecINTERNAL_ERROR]           = _T("Interner Fehler.");
-    m_vErrMsg[ecUNKNOWN_ESCAPE_SEQUENCE]  = _T("Unbekannte Escape-Sequenz.");
-    m_vErrMsg[ecINVALID_NAME]             = _T("Ungültiger Funktions-, Variablen- oder Konstantenbezeichner.");
-    m_vErrMsg[ecINVALID_FUN_PTR]          = _T("Ungültiger Zeiger auf eine Callback-Funktion.");
-    m_vErrMsg[ecINVALID_VAR_PTR]          = _T("Ungültiger Variablenzeiger.");
-    m_vErrMsg[ecUNEXPECTED_OPERATOR]      = _T("Unerwarteter Operator \"$IDENT$\" an Position $POS$.");
-    m_vErrMsg[ecUNEXPECTED_EOF]           = _T("Unerwartetes Formelende an Position $POS$.");
-    m_vErrMsg[ecUNEXPECTED_COMMA]         = _T("Unerwartetes Komma an Position $POS$.");
-    m_vErrMsg[ecUNEXPECTED_PARENS  ]      = _T("Unerwartete Klammer \"$IDENT$\" an Position $POS$ gefunden.");
-    m_vErrMsg[ecUNEXPECTED_FUN]           = _T("Unerwartete Funktion \"$IDENT$\" an Position $POS$ gefunden.");
-    m_vErrMsg[ecUNEXPECTED_VAL]           = _T("Unerwarteter Wert \"$IDENT$\" an Position $POS$ gefunden.");
-    m_vErrMsg[ecUNEXPECTED_VAR]           = _T("Unerwartete Variable \"$IDENT$\" an Position $POS$ gefunden.");
-    m_vErrMsg[ecUNEXPECTED_STR]           = _T("Unerwarteter Text an Position $POS$ gefunden.");
-    m_vErrMsg[ecUNEXPECTED_CONDITIONAL]   = _T("Der Operator \"$IDENT$\" muss stets auf eine schließenden Klammer folgen.");
-    m_vErrMsg[ecUNEXPECTED_NEWLINE]       = _T("Unerwarteter Zeilenumbruch.");
-    m_vErrMsg[ecMISSING_PARENS]           = _T("Fehlende Klammer.");
-    m_vErrMsg[ecMISSING_ELSE_CLAUSE]      = _T("\"If-then-else\" Operator ohne \"else\" Zweig verwendet.");
-    m_vErrMsg[ecMISPLACED_COLON]          = _T("Komma an unerwarteter Position $POS$ gefunden.");
-    m_vErrMsg[ecTOO_MANY_PARAMS]          = _T("Der Funktion \"$IDENT$\" wurden zu viele Argumente übergeben.");
-    m_vErrMsg[ecTOO_FEW_PARAMS]           = _T("Der Funktion \"$IDENT$\" wurden nicht genug Argumente übergeben.");
-    m_vErrMsg[ecDIV_BY_ZERO]              = _T("Division durch Null.");
-    m_vErrMsg[ecDOMAIN_ERROR]             = _T("Der Parameter der Funktion \"$IDENT$\" hat einen Wert, der nicht Teil des Definitionsbereiches der Funktion ist.");
-    m_vErrMsg[ecNAME_CONFLICT]            = _T("Namenskonflikt");
-    m_vErrMsg[ecOPT_PRI]                  = _T("Ungültige Operatorpriorität (muss größer oder gleich Null sein).");
-    m_vErrMsg[ecBUILTIN_OVERLOAD]         = _T("Die Überladung für diesen Binäroperator steht im Widerspruch zu intern vorhanden operatoren.");
-    m_vErrMsg[ecUNTERMINATED_STRING]      = _T("Die Zeichenkette an Position $POS$ wird nicht beendet.");
-    m_vErrMsg[ecSTRING_EXPECTED]          = _T("Es wurde eine Zeichenkette als Funktionseingabewert erwartet.");
-    m_vErrMsg[ecVAL_EXPECTED]             = _T("Numerische Funktionen können nicht mit nichtnumerischen Parametern aufgerufen werden.");
-    m_vErrMsg[ecTYPE_CONFLICT]            = _T("Der Wert \"$IDENT$\" ist vom Typ '$TYPE1$' und es gibt keine passende Typkonversion in den erwarteten Typ '$TYPE2$'.");
-    m_vErrMsg[ecTYPE_CONFLICT_FUN]        = _T("Das Argument $ARG$ der Funktion oder des Operators \"$IDENT$\" ist vom Typ '$TYPE1$', erwartet wurde Typ '$TYPE2$'.");
-    m_vErrMsg[ecTYPE_CONFLICT_IDX]        = _T("Der Index der Variable \"$IDENT$\" muss ein positiver Ganzzahlwert sein. Der übergebene Indexwert ist vom Typ '$TYPE1$'.");
-    m_vErrMsg[ecGENERIC]                  = _T("Allgemeiner Parser Fehler.");
-    m_vErrMsg[ecINVALID_TYPE]             = _T("Ungültiger Funktionsargumenttyp.");
-    m_vErrMsg[ecINVALID_TYPECAST]         = _T("Umwandlungen vom Typ '$TYPE1$' in den Typ '$TYPE2$' werden nicht unterstützt!");
-    m_vErrMsg[ecARRAY_SIZE_MISMATCH]      = _T("Feldgrößen stimmen nicht überein.");
-    m_vErrMsg[ecNOT_AN_ARRAY]             = _T("Der Indexoperator kann nicht auf die Skalarvariable \"$IDENT$\" angewandt werden.");
-    m_vErrMsg[ecUNEXPECTED_SQR_BRACKET]   = _T("Eckige Klammern sind an dieser Position nicht erlaubt.");
-	m_vErrMsg[ecUNEXPECTED_CURLY_BRACKET] = _T("Geschweifte Klammern sind an dieser Position nicht erlaubt.");
-    m_vErrMsg[ecINDEX_OUT_OF_BOUNDS]      = _T("Indexüberschreitung bei Variablenzugriff auf \"$IDENT$\".");
-    m_vErrMsg[ecINDEX_DIMENSION]          = _T("Die Operation kann nicht auf Felder angewandt werden, deren Größe unterschiedlich ist.");
-    m_vErrMsg[ecMISSING_SQR_BRACKET]      = _T("Fehlendes \"]\".");
-	m_vErrMsg[ecMISSING_CURLY_BRACKET]    = _T("Fehlendes \"}\".");
-    m_vErrMsg[ecASSIGNEMENT_TO_VALUE]     = _T("Der Zuweisungsoperator \"$IDENT$\" kann in diesem Zusammenhang nicht verwendet werden.");
-    m_vErrMsg[ecEVAL]                     = _T("Die Funktion bzw. der Operator \"$IDENT$\" kann nicht berechnet werden: $HINT$");
-    m_vErrMsg[ecINVALID_PARAMETER]        = _T("Der Parameter $ARG$ der Funktion \"$IDENT$\" is ungültig.");
-    m_vErrMsg[ecINVALID_NUMBER_OF_PARAMETERS] = _T("Unzulässige Zahl an Funktionsparametern.");
-    m_vErrMsg[ecOVERFLOW]                     = _T("Ein arithmetische Überlauf wurde in Funktion/Operator \"$IDENT$\" entdeckt.");
-    m_vErrMsg[ecMATRIX_DIMENSION_MISMATCH]    = _T("Matrixdimensionen stimmen nicht überein, Operation \"$IDENT$\" kann nicht ausgeführt werden.");
-    m_vErrMsg[ecVARIABLE_DEFINED]             = _T("Die Variable \"$IDENT$\" is bereits definiert.");
-    m_vErrMsg[ecCONSTANT_DEFINED]             = _T("Die Konstante \"$IDENT$\" is bereits definiert.");
-    m_vErrMsg[ecFUNOPRT_DEFINED]              = _T("Ein Element mit der Bezeichnung \"$IDENT$\" ist bereits definiert.");
+    m_vErrMsg = {
+      "Unbekanntes Token \"$IDENT$\" an Position $POS$ gefunden.",
+      "Interner Fehler.",
+      "Unbekannte Escape-Sequenz.",
+      "Ungültiger Funktions-, Variablen- oder Konstantenbezeichner.",
+      "Ungültiger Zeiger auf eine Callback-Funktion.",
+      "Ungültiger Variablenzeiger.",
+      "Unerwarteter Operator \"$IDENT$\" an Position $POS$.",
+      "Unerwartetes Formelende an Position $POS$.",
+      "Unerwartetes Komma an Position $POS$.",
+      "Unerwartete Klammer \"$IDENT$\" an Position $POS$ gefunden.",
+      "Unerwartete Funktion \"$IDENT$\" an Position $POS$ gefunden.",
+      "Unerwarteter Wert \"$IDENT$\" an Position $POS$ gefunden.",
+      "Unerwartete Variable \"$IDENT$\" an Position $POS$ gefunden.",
+      "Unerwarteter Text an Position $POS$ gefunden.",
+      "Der Operator \"$IDENT$\" muss stets auf eine schließenden Klammer folgen.",
+      "Unerwarteter Zeilenumbruch.",
+      "Fehlende Klammer.",
+      "\"If-then-else\" Operator ohne \"else\" Zweig verwendet.",
+      "Komma an unerwarteter Position $POS$ gefunden.",
+      "Der Funktion \"$IDENT$\" wurden zu viele Argumente übergeben.",
+      "Der Funktion \"$IDENT$\" wurden nicht genug Argumente übergeben.",
+      "Division durch Null.",
+      "Der Parameter der Funktion \"$IDENT$\" hat einen Wert, der nicht Teil des Definitionsbereiches der Funktion ist.",
+      "Namenskonflikt",
+      "Ungültige Operatorpriorität (muss größer oder gleich Null sein).",
+      "Die Überladung für diesen Binäroperator steht im Widerspruch zu intern vorhanden operatoren.",
+      "Die Zeichenkette an Position $POS$ wird nicht beendet.",
+      "Es wurde eine Zeichenkette als Funktionseingabewert erwartet.",
+      "Numerische Funktionen können nicht mit nichtnumerischen Parametern aufgerufen werden.",
+      "Der Wert \"$IDENT$\" ist vom Typ '$TYPE1$' und es gibt keine passende Typkonversion in den erwarteten Typ '$TYPE2$'.",
+      "Das Argument $ARG$ der Funktion oder des Operators \"$IDENT$\" ist vom Typ '$TYPE1$', erwartet wurde Typ '$TYPE2$'.",
+      "Der Index der Variable \"$IDENT$\" muss ein positiver Ganzzahlwert sein. Der übergebene Indexwert ist vom Typ '$TYPE1$'.",
+      "Allgemeiner Parser Fehler.",
+      "Ungültiger Funktionsargumenttyp.",
+      "Umwandlungen vom Typ '$TYPE1$' in den Typ '$TYPE2$' werden nicht unterstützt!",
+      "Feldgrößen stimmen nicht überein.",
+      "Der Indexoperator kann nicht auf die Skalarvariable \"$IDENT$\" angewandt werden.",
+      "Eckige Klammern sind an dieser Position nicht erlaubt.",
+      "Geschweifte Klammern sind an dieser Position nicht erlaubt.",
+      "Indexüberschreitung bei Variablenzugriff auf \"$IDENT$\".",
+      "Die Operation kann nicht auf Felder angewandt werden, deren Größe unterschiedlich ist.",
+      "Fehlendes \"]\".",
+      "Fehlendes \"}\".",
+      "Der Zuweisungsoperator \"$IDENT$\" kann in diesem Zusammenhang nicht verwendet werden.",
+      "Die Funktion bzw. der Operator \"$IDENT$\" kann nicht berechnet werden: $HINT$",
+      "Der Parameter $ARG$ der Funktion \"$IDENT$\" is ungültig.",
+      "Unzulässige Zahl an Funktionsparametern.",
+      "Ein arithmetische Überlauf wurde in Funktion/Operator \"$IDENT$\" entdeckt.",
+      "Matrixdimensionen stimmen nicht überein, Operation \"$IDENT$\" kann nicht ausgeführt werden.",
+      "Die Variable \"$IDENT$\" is bereits definiert.",
+      "Die Konstante \"$IDENT$\" is bereits definiert.",
+      "Ein Element mit der Bezeichnung \"$IDENT$\" ist bereits definiert."
+    };
   }
+
 #endif // _UNICODE
 
 MUP_NAMESPACE_END

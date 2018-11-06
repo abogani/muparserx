@@ -30,8 +30,6 @@ MUP_NAMESPACE_START
 
   protected:
     std::vector<string_type>  m_vErrMsg;
-
-    virtual void InitErrorMessages() = 0;
   };
 
   //-----------------------------------------------------------------------------------------------
@@ -40,9 +38,6 @@ MUP_NAMESPACE_START
   {
   public:
     ParserMessageProviderEnglish();
-
-  protected:
-    virtual void InitErrorMessages();
   };
 
   //-----------------------------------------------------------------------------------------------
@@ -51,9 +46,6 @@ MUP_NAMESPACE_START
   {
   public:
     ParserMessageProviderGerman();
-
-  protected:
-    virtual void InitErrorMessages();
   };
 
 MUP_NAMESPACE_END
